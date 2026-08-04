@@ -27,7 +27,14 @@ The project demonstrates how the same SQL techniques can answer very different b
 
 ---
 
-## Business Highlights
+## Executive Business Highlights
+
+| Domain | Key Finding | Business Value |
+|---------|-------------|----------------|
+| E-commerce | Built 5 product analytics case studies covering activation, funnel analysis, retention, engagement, and cart abandonment. | Demonstrates customer journey and conversion analysis. |
+| SaaS | Built 5 SaaS analytics case studies covering MRR, Trial Conversion, GRR/NRR, Feature Adoption, and Expansion Revenue. | Demonstrates subscription and revenue analytics. |
+| SQL | Used CTEs, Window Functions, Cohort Analysis, Conditional Aggregation, and Revenue Analytics. | Demonstrates advanced SQL skills used in production. |
+| Business | Every query includes Business Question, PM Action, and Sanity Check. | Shows business thinking, not just SQL coding. |
 
 | Analysis | Key Business Question |
 |---|---|

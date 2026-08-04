@@ -75,6 +75,24 @@ The project demonstrates how the same SQL techniques can answer very different b
 
 ---
 
+## Repository Features
+
+✅ 10 Production-ready SQL business case studies
+
+✅ Covers both B2C (E-commerce) and B2B (SaaS) analytics
+
+✅ Every SQL query includes:
+- Business Question
+- What This Tells Us
+- PM Action
+- Sanity Check
+
+✅ Built using PostgreSQL
+
+✅ Designed using production-style SQL standards
+
+✅ Suitable for Data Analyst / Senior Data Analyst portfolio
+
 ## Tools and Technologies
 
 - PostgreSQL
@@ -133,6 +151,42 @@ A detailed comparison will be published as:
 The case study compares behavioral e-commerce analytics with commercial SaaS analytics.
 
 ---
+
+# Sample Dashboards & Query Outputs
+
+Below are screenshots from Metabase showing selected analyses.
+
+## E1 – Activation Curve
+
+![Activation Curve](<img width="607" height="375" alt="e1_activation_curve" src="https://github.com/user-attachments/assets/2cb0952d-41ed-4c1f-805d-890c84e0a2db" />
+)
+
+---
+
+## E2 – Checkout Funnel
+
+![Checkout Funnel](<img width="681" height="353" alt="e2_checkout_funnel" src="https://github.com/user-attachments/assets/c4779c1a-b288-4877-ab37-0bba3b21165f" />
+)
+
+---
+
+## S1 – Monthly MRR Movements
+
+![MRR Movements](<img width="569" height="383" alt="s1_mrr_movements" src="https://github.com/user-attachments/assets/12a73b66-4c01-49ca-927b-8eb6087252dc" />
+)
+
+---
+
+## S3 – GRR & NRR
+
+![GRR & NRR](<img width="758" height="381" alt="s3_grr_nrr" src="https://github.com/user-attachments/assets/5cb0e98f-80c3-4c2d-8ce2-862391c84ae6" />
+)
+
+---
+
+## S5 – Expansion Revenue
+
+![Expansion Revenue](s5_expansion_revenue)
 
 ## Author
 

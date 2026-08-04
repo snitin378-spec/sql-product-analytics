@@ -1,4 +1,4 @@
-# SQL Product Analytics Portfolio
+# SQL Product Analytics Portfolio – E-commerce & SaaS Business Case Studies
 
 ## Executive Summary
 
@@ -29,18 +29,14 @@ The project demonstrates how the same SQL techniques can answer very different b
 
 # Executive Business Highlights
 
-This portfolio contains **10 end-to-end SQL business analytics case studies** built using PostgreSQL across E-commerce and SaaS datasets.
-
-### Headline Findings
-
-| Area | Business Insight |
-|------|------------------|
-| 🛒 Customer Activation | Measured how quickly new users became active using cohort analysis. |
-| 🛍️ Checkout Funnel | Identified the stages with the highest customer drop-off during checkout. |
-| 📈 Customer Retention | Measured weekly customer retention and long-term engagement trends. |
-| 💰 Revenue Growth | Decomposed Monthly Recurring Revenue into New, Expansion, Contraction, Churn, and Reactivation MRR. |
-| 🚀 Product Adoption | Measured how feature adoption relates to customer retention. |
-| 📊 Expansion Revenue | Identified whether plan upgrades, seat additions, or add-ons contributed most to revenue growth. |
+| Domain | Actual Finding | Business Value |
+|---------|----------------|----------------|
+| 🚀 Customer Activation | The highest 7-day activation rate reached **21.67%** (Week of May 18, 2026), while the latest cohort measured **8.79%** because it is still maturing. | Demonstrates how onboarding effectiveness changes across customer cohorts. |
+| 🛒 Checkout Funnel | The largest checkout drop-off occurred at the **final Purchase step**, ranging from **7.56%–8.30%** across acquisition channels. | Indicates the biggest opportunity to improve conversion lies in the final payment-to-purchase stage. |
+| 🔄 Weekly Retention | Week-1 retention peaked at **36.30%** (May 11 cohort), while recent cohorts naturally show lower later-week retention due to incomplete observation windows. | Highlights customer engagement patterns and cohort maturity effects. |
+| 💰 Trial Conversion | Multiple cohorts achieved **100% conversion within 14 days**, while others ranged from **25%–50%**, showing significant variation in onboarding effectiveness. | Helps Product and Growth teams identify high-performing onboarding cohorts. |
+| 📈 Revenue Retention | September 2022 cohort achieved **GRR 92.64%** and **NRR 113.95%**, showing expansion revenue more than offset customer losses. | Demonstrates strong expansion opportunities among retained customers. |
+| 💵 Expansion Revenue | **Seat Expansion generated $28,259 MRR**, exceeding **Plan Upgrades ($19,281)** and **Add-ons ($3,467)**. | Indicates that customer growth through additional seats is the strongest expansion driver. |
 
 ### Business Impact
 
@@ -122,7 +118,7 @@ Below are selected Metabase dashboards created as part of this project.
 ![Activation Curve](images/<img width="607" height="375" alt="e1_activation_curve" src="https://github.com/user-attachments/assets/f5012cc0-58a5-49f1-a445-49db6b491a52" />
 )
 
-**Business Insight:** Visualizes customer activation by cohort, helping identify onboarding improvements.
+**Key Insight:** Customer activation peaked at **21.67% within 7 days**, while recent cohorts show lower activation because their observation windows are still incomplete.
 
 ---
 
@@ -131,7 +127,7 @@ Below are selected Metabase dashboards created as part of this project.
 ![Checkout Funnel](images/<img width="681" height="353" alt="e2_checkout_funnel" src="https://github.com/user-attachments/assets/09a4b7d8-4ed4-4983-9c7c-705078d1a6f7" />
 )
 
-**Business Insight:** Identifies the checkout stage with the highest abandonment.
+**Key Insight:** The largest customer drop-off occurs at the **final Purchase stage (7.56%–8.30%)**, making it the highest-impact opportunity for conversion optimization.
 
 ---
 
@@ -140,7 +136,7 @@ Below are selected Metabase dashboards created as part of this project.
 ![MRR Movements](images/<img width="569" height="383" alt="s1_mrr_movements" src="https://github.com/user-attachments/assets/d186371c-bc7d-4a68-9bce-8ed2902a51ef" />
 )
 
-**Business Insight:** Shows how New, Expansion, Churn, and Contraction MRR affect monthly revenue.
+**Key Insight:** Monthly recurring revenue was driven by a combination of new subscriptions, customer expansion, contraction, churn, and reactivation, providing Finance with a complete revenue movement breakdown.
 
 ---
 
@@ -149,7 +145,7 @@ Below are selected Metabase dashboards created as part of this project.
 ![GRR NRR](images/<img width="758" height="381" alt="s3_grr_nrr" src="https://github.com/user-attachments/assets/3304feb8-64ef-49f8-95ec-e9a59ebdc096" />
 )
 
-**Business Insight:** Demonstrates long-term customer revenue retention across cohorts.
+**Key Insight:** The **September 2022** cohort achieved **92.64% GRR** and **113.95% NRR**, indicating that expansion revenue more than compensated for churn and contraction.
 
 ---
 
@@ -158,7 +154,7 @@ Below are selected Metabase dashboards created as part of this project.
 ![Expansion Revenue](images/<img width="449" height="296" alt="s5_expansion_revenue" src="https://github.com/user-attachments/assets/621b84cf-471d-4c7c-9fc5-572967ce8b85" />
 )
 
-**Business Insight:** Explains which expansion strategies generate the highest recurring revenue.
+**Key Insight:** **Seat Expansion contributed $28,259 MRR**, outperforming both plan upgrades (**$19,281**) and add-ons (**$3,467**), making it the primary expansion revenue source.
 
 ## Repository Structure
 

@@ -27,14 +27,27 @@ The project demonstrates how the same SQL techniques can answer very different b
 
 ---
 
-## Executive Business Highlights
+# Executive Business Highlights
 
-| Domain | Key Finding | Business Value |
-|---------|-------------|----------------|
-| E-commerce | Built 5 product analytics case studies covering activation, funnel analysis, retention, engagement, and cart abandonment. | Demonstrates customer journey and conversion analysis. |
-| SaaS | Built 5 SaaS analytics case studies covering MRR, Trial Conversion, GRR/NRR, Feature Adoption, and Expansion Revenue. | Demonstrates subscription and revenue analytics. |
-| SQL | Used CTEs, Window Functions, Cohort Analysis, Conditional Aggregation, and Revenue Analytics. | Demonstrates advanced SQL skills used in production. |
-| Business | Every query includes Business Question, PM Action, and Sanity Check. | Shows business thinking, not just SQL coding. |
+This portfolio contains **10 end-to-end SQL business analytics case studies** built using PostgreSQL across E-commerce and SaaS datasets.
+
+### Headline Findings
+
+| Area | Business Insight |
+|------|------------------|
+| 🛒 Customer Activation | Measured how quickly new users became active using cohort analysis. |
+| 🛍️ Checkout Funnel | Identified the stages with the highest customer drop-off during checkout. |
+| 📈 Customer Retention | Measured weekly customer retention and long-term engagement trends. |
+| 💰 Revenue Growth | Decomposed Monthly Recurring Revenue into New, Expansion, Contraction, Churn, and Reactivation MRR. |
+| 🚀 Product Adoption | Measured how feature adoption relates to customer retention. |
+| 📊 Expansion Revenue | Identified whether plan upgrades, seat additions, or add-ons contributed most to revenue growth. |
+
+### Business Impact
+
+- Solved **10 real-world product analytics problems**
+- Covered both **B2C (E-commerce)** and **B2B (SaaS)** analytics
+- Demonstrated advanced SQL using CTEs, Window Functions, Cohort Analysis, Funnel Analysis, and Revenue Analytics
+- Every analysis includes a Business Question, Business Interpretation, PM Action, and Sanity Check
 
 | Analysis | Key Business Question |
 |---|---|
@@ -51,27 +64,20 @@ The project demonstrates how the same SQL techniques can answer very different b
 
 ---
 
-## Query Index
+## Query Portfolio
 
-### E-commerce Analytics
-
-| Query | Business Question | Main SQL Concepts |
-|---|---|---|
-| [E1 – Activation Curve](ecom/e1_activation_curve.sql) | How quickly do signups become active customers? | CTEs, cohorts, percentiles |
-| [E2 – Checkout Funnel](ecom/e2_checkout_funnel.sql) | Where does checkout lose customers by channel? | Funnel logic, conditional aggregation |
-| [E3 – Weekly Retention](ecom/e3_weekly_retention.sql) | What percentage of customers return in Weeks 1–4? | Relative-week cohorts, retention |
-| [E4 – PDP Engagement](ecom/e4_pdp_engagement.sql) | Which high-view products have weak cart conversion? | Product-level aggregation, ranking |
-| [E5 – Cart Abandonment](ecom/e5_cart_abandonment.sql) | Which cart-value buckets lose the most revenue? | Bucketing, session aggregation |
-
-### SaaS Analytics
-
-| Query | Business Question | Main SQL Concepts |
-|---|---|---|
-| [S1 – MRR Movements](saas/s1_mrr_movements.sql) | What drove monthly MRR changes? | Event classification, running totals |
-| [S2 – Trial Conversion](saas/s2_trial_conversion.sql) | What percentage converted within 14, 30 and 60 days? | Cohorts, conditional counting |
-| [S3 – GRR and NRR](saas/s3_grr_nrr.sql) | How much cohort revenue remained after 12 months? | Revenue cohorts, windowed lifecycle logic |
-| [S4 – Feature Adoption](saas/s4_feature_adoption.sql) | Which features are associated with retention? | Adoption flags, comparative rates |
-| [S5 – Expansion Revenue](saas/s5_expansion_revenue.sql) | What is the dominant expansion motion? | Revenue decomposition, medians |
+| Query | Stakeholder Question | Key Business Insight | SQL Concepts |
+|------|----------------------|----------------------|-------------|
+| E1 – Activation Curve | How quickly do customers activate after signup? | Measures onboarding effectiveness across customer cohorts. | Cohort Analysis, Window Functions |
+| E2 – Checkout Funnel | Where do customers abandon checkout? | Identifies the highest drop-off stage in the purchase journey. | Conditional Aggregation |
+| E3 – Weekly Retention | Do customers return after signup? | Measures long-term customer engagement. | Window Functions |
+| E4 – PDP Engagement | Which products have high traffic but poor conversion? | Highlights products requiring merchandising improvements. | Product Analytics |
+| E5 – Cart Abandonment | Which carts generate the highest lost revenue? | Quantifies revenue leakage across cart-value segments. | Session Analytics |
+| S1 – MRR Movements | What drives monthly revenue growth? | Breaks MRR into New, Expansion, Churn, Contraction, and Reactivation. | Revenue Analytics |
+| S2 – Trial Conversion | How quickly do trials become paid customers? | Measures trial effectiveness and conversion speed. | Cohort Analysis |
+| S3 – GRR & NRR | How much recurring revenue is retained after one year? | Measures customer revenue retention and expansion. | Revenue Retention |
+| S4 – Feature Adoption | Which product features improve retention? | Compares adoption rates and customer retention. | Product Analytics |
+| S5 – Expansion Revenue | Where does expansion revenue originate? | Explains revenue growth from upgrades, seats, and add-ons. | Revenue Growth |
 
 ---
 
@@ -106,6 +112,53 @@ The project demonstrates how the same SQL techniques can answer very different b
 - Revenue analytics
 
 ---
+
+# Dashboard Highlights
+
+Below are selected Metabase dashboards created as part of this project.
+
+## Customer Activation (E1)
+
+![Activation Curve](images/<img width="607" height="375" alt="e1_activation_curve" src="https://github.com/user-attachments/assets/f5012cc0-58a5-49f1-a445-49db6b491a52" />
+)
+
+**Business Insight:** Visualizes customer activation by cohort, helping identify onboarding improvements.
+
+---
+
+## Checkout Funnel (E2)
+
+![Checkout Funnel](images/<img width="681" height="353" alt="e2_checkout_funnel" src="https://github.com/user-attachments/assets/09a4b7d8-4ed4-4983-9c7c-705078d1a6f7" />
+)
+
+**Business Insight:** Identifies the checkout stage with the highest abandonment.
+
+---
+
+## Monthly Recurring Revenue (S1)
+
+![MRR Movements](images/<img width="569" height="383" alt="s1_mrr_movements" src="https://github.com/user-attachments/assets/d186371c-bc7d-4a68-9bce-8ed2902a51ef" />
+)
+
+**Business Insight:** Shows how New, Expansion, Churn, and Contraction MRR affect monthly revenue.
+
+---
+
+## Gross Revenue Retention (S3)
+
+![GRR NRR](images/<img width="758" height="381" alt="s3_grr_nrr" src="https://github.com/user-attachments/assets/3304feb8-64ef-49f8-95ec-e9a59ebdc096" />
+)
+
+**Business Insight:** Demonstrates long-term customer revenue retention across cohorts.
+
+---
+
+## Expansion Revenue (S5)
+
+![Expansion Revenue](images/<img width="449" height="296" alt="s5_expansion_revenue" src="https://github.com/user-attachments/assets/621b84cf-471d-4c7c-9fc5-572967ce8b85" />
+)
+
+**Business Insight:** Explains which expansion strategies generate the highest recurring revenue.
 
 ## Repository Structure
 
@@ -151,42 +204,6 @@ A detailed comparison will be published as:
 The case study compares behavioral e-commerce analytics with commercial SaaS analytics.
 
 ---
-
-# Sample Dashboards & Query Outputs
-
-Below are screenshots from Metabase showing selected analyses.
-
-## E1 – Activation Curve
-
-![Activation Curve](<img width="607" height="375" alt="e1_activation_curve" src="https://github.com/user-attachments/assets/2cb0952d-41ed-4c1f-805d-890c84e0a2db" />
-)
-
----
-
-## E2 – Checkout Funnel
-
-![Checkout Funnel](<img width="681" height="353" alt="e2_checkout_funnel" src="https://github.com/user-attachments/assets/c4779c1a-b288-4877-ab37-0bba3b21165f" />
-)
-
----
-
-## S1 – Monthly MRR Movements
-
-![MRR Movements](<img width="569" height="383" alt="s1_mrr_movements" src="https://github.com/user-attachments/assets/12a73b66-4c01-49ca-927b-8eb6087252dc" />
-)
-
----
-
-## S3 – GRR & NRR
-
-![GRR & NRR](<img width="758" height="381" alt="s3_grr_nrr" src="https://github.com/user-attachments/assets/5cb0e98f-80c3-4c2d-8ce2-862391c84ae6" />
-)
-
----
-
-## S5 – Expansion Revenue
-
-![Expansion Revenue](s5_expansion_revenue)
 
 ## Author
 

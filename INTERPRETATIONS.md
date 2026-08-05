@@ -61,18 +61,22 @@ Target low-retention cohorts with lifecycle campaigns and personalized engagemen
 # E4 – PDP Engagement
 
 ## Business Question
-Which products receive high views but low cart additions?
+
+Which high-traffic products underperform compared with similar products in their category?
 
 ## What This Analysis Shows
-Compares product page views against add-to-cart actions to identify products with poor conversion.
+
+The analysis benchmarks each product's add-to-cart rate against the median for its category. The highest-view product, **Suta Threads Velvet Kajal**, received **4,334 PDP views** but achieved only a **6.0% add-to-cart rate**, performing approximately **30 percentage points below** the category median.
 
 ## Business Value
-- Finds underperforming product pages.
-- Identifies merchandising opportunities.
-- Supports product optimization.
+
+- Identifies products attracting strong customer interest but weak conversion.
+- Uses category-level benchmarks instead of absolute conversion rates.
+- Helps Merchandising teams prioritize product-page improvements.
 
 ## Recommended Action
-Review pricing, images, descriptions, and reviews for products with high traffic but low conversion.
+
+Review the highest-view products performing below their category median by assessing pricing, product images, descriptions, customer reviews, and stock availability before increasing marketing spend.
 
 ---
 

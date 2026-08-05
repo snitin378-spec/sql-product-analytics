@@ -78,17 +78,24 @@ Review pricing, images, descriptions, and reviews for products with high traffic
 
 # E5 – Cart Abandonment
 
-Business Question
+## Business Question
 
-Which cart-value segments contribute the greatest revenue leakage?
+Which cart-value segments contribute the greatest revenue leakage, and where should the business focus its checkout optimization efforts?
 
-Key Finding
+## What This Analysis Shows
 
-The <₹500 bucket recorded the highest abandonment rate (53%), but the ₹5,000–₹14,999 bucket contributed the highest GMV left on the table (₹9.85M). This indicates that focusing only on abandonment percentage can overlook where the largest revenue recovery opportunity exists.
+The analysis groups shopping sessions into five cart-value buckets and measures abandonment at each level. While the **<₹500** bucket recorded the highest abandonment rate (**53%**), the **₹5,000–₹14,999** bucket contributed the largest **GMV left on the table (₹9,848,217.87)**. This shows that the highest abandonment percentage is not necessarily where the greatest revenue opportunity exists.
 
-Business Recommendation
+## Business Value
 
-Prioritize checkout optimization for high-value carts while using promotional tactics to improve conversion for low-value carts.
+- Identifies which cart-value segments contribute the most lost revenue.
+- Quantifies GMV lost due to abandoned carts.
+- Helps Product, Growth, and Marketing teams prioritize high-impact checkout improvements.
+- Supports data-driven decisions for cart recovery campaigns and promotional strategies.
+
+## Recommended Action
+
+Prioritize checkout optimization for the **₹5,000–₹14,999** segment because it represents the largest revenue recovery opportunity. For lower-value carts, consider targeted promotions such as free-shipping thresholds or limited-time incentives to reduce the **53%** abandonment rate.
 
 ---
 

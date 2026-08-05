@@ -3,59 +3,67 @@
 This document summarizes the business objective, key insights, and recommended actions for each SQL analysis included in this portfolio.
 
 ---
-
 # E1 – Activation Curve
 
 ## Business Question
-How quickly do newly registered customers become active?
+
+How quickly do newly registered customers become active after signup?
 
 ## What This Analysis Shows
-This analysis measures the time taken for users to complete their first meaningful action after signup. It helps evaluate onboarding effectiveness and identify delays in customer activation.
+
+The strongest cohort, beginning **18-May-2026**, achieved a **21.67% 7-day activation rate**, while the most recent cohort reached only **8.79%**. The lower activation for recent cohorts is expected because their observation windows are still incomplete.
 
 ## Business Value
-- Measures onboarding performance.
-- Identifies slow activation cohorts.
-- Helps improve first-time user experience.
+
+- Measures onboarding effectiveness across signup cohorts.
+- Identifies cohorts requiring additional activation support.
+- Helps Growth and Product teams monitor improvements to the onboarding experience.
 
 ## Recommended Action
-Improve onboarding for cohorts with slower activation through guided tours, product education, or personalized reminders.
 
+Review the onboarding journey for the **8-Jun-2026** cohort, which recorded the lowest observed activation (**8.79%**). Compare email delivery, product walkthrough completion, and acquisition channels with the higher-performing **18-May-2026** cohort (**21.67%**) to identify improvement opportunities.
 ---
 
 # E2 – Checkout Funnel
 
 ## Business Question
-Where do customers abandon the checkout process?
+
+Where do customers abandon the checkout process, and which stage offers the biggest opportunity to improve conversion?
 
 ## What This Analysis Shows
-Tracks customer progression through each checkout stage and identifies the step with the highest drop-off.
+
+The analysis tracks customer progression through each checkout stage across acquisition channels. The largest drop-off occurred at the **final Purchase step**, with abandonment ranging between **7.56% and 8.30%** across channels. This indicates that most customers successfully progress through checkout but some fail to complete the final purchase.
 
 ## Business Value
-- Detects conversion bottlenecks.
-- Measures funnel efficiency.
-- Supports checkout optimization.
+
+- Identifies the checkout stage with the greatest customer drop-off.
+- Enables Product and Engineering teams to prioritize checkout improvements.
+- Helps measure the effectiveness of future checkout optimizations.
 
 ## Recommended Action
-Investigate the stage with the highest abandonment using session recordings, payment logs, and UX testing.
 
+Investigate the final purchase stage by reviewing payment failures, checkout performance, and user experience. Since all acquisition channels show a similar **7.56%–8.30%** drop-off, improvements at this stage are likely to benefit the overall conversion rate.
 ---
 
 # E3 – Weekly Retention
 
 ## Business Question
-Do customers continue returning after their first week?
+
+Do customers continue returning after signup, and how does retention change over time?
 
 ## What This Analysis Shows
-Measures customer retention across weekly cohorts and highlights long-term engagement trends.
+
+The strongest cohort achieved **36.30% Week-1 retention**. Retention gradually declined in later weeks, while recent cohorts show lower values because their observation windows have not yet completed. This highlights the importance of comparing cohorts with similar maturity.
 
 ## Business Value
-- Evaluates customer loyalty.
-- Identifies retention decline.
-- Measures product stickiness.
+
+- Measures customer engagement beyond initial activation.
+- Identifies long-term retention trends.
+- Helps Product and Growth teams evaluate the effectiveness of engagement initiatives.
 
 ## Recommended Action
-Target low-retention cohorts with lifecycle campaigns and personalized engagement.
 
+Focus on improving engagement beyond the first week through lifecycle messaging, personalized recommendations, and product notifications. Monitor whether future cohorts improve upon the current **36.30% Week-1 retention** benchmark.
 ---
 
 # E4 – PDP Engagement
@@ -66,127 +74,142 @@ Which high-traffic products underperform compared with similar products in their
 
 ## What This Analysis Shows
 
-The analysis benchmarks each product's add-to-cart rate against the median for its category. The highest-view product, **Suta Threads Velvet Kajal**, received **4,334 PDP views** but achieved only a **6.0% add-to-cart rate**, performing approximately **30 percentage points below** the category median.
+The analysis compares each product's add-to-cart (ATC) rate against the median ATC rate for its category rather than using an absolute benchmark. The highest-view product, **Suta Threads Velvet Kajal**, received **4,334 product page views** but achieved only a **6.0% ATC rate**, performing approximately **30 percentage points below** the median for the **Makeup** category.
 
 ## Business Value
 
 - Identifies products attracting strong customer interest but weak conversion.
-- Uses category-level benchmarks instead of absolute conversion rates.
-- Helps Merchandising teams prioritize product-page improvements.
+- Benchmarks products against their own category for fair comparison.
+- Helps Merchandising teams prioritize product page improvements with the greatest potential business impact.
 
 ## Recommended Action
 
-Review the highest-view products performing below their category median by assessing pricing, product images, descriptions, customer reviews, and stock availability before increasing marketing spend.
-
+Review the highest-view products performing below their category median by evaluating pricing, product images, descriptions, customer reviews, and stock availability before increasing marketing spend.
 ---
 
 # E5 – Cart Abandonment
 
 ## Business Question
 
-Which cart-value segments contribute the greatest revenue leakage, and where should the business focus its checkout optimization efforts?
+Which cart-value segments contribute the greatest revenue leakage, and where should checkout optimization efforts be focused?
 
 ## What This Analysis Shows
 
-The analysis groups shopping sessions into five cart-value buckets and measures abandonment at each level. While the **<₹500** bucket recorded the highest abandonment rate (**53%**), the **₹5,000–₹14,999** bucket contributed the largest **GMV left on the table (₹9,848,217.87)**. This shows that the highest abandonment percentage is not necessarily where the greatest revenue opportunity exists.
+The analysis groups shopping sessions into five cart-value buckets and measures abandonment within each segment. While the **<₹500** bucket recorded the highest abandonment rate (**53%**), the **₹5,000–₹14,999** bucket generated the largest **GMV left on the table (₹9,848,217.87)**. This demonstrates that the highest abandonment percentage does not necessarily correspond to the greatest revenue impact.
 
 ## Business Value
 
-- Identifies which cart-value segments contribute the most lost revenue.
-- Quantifies GMV lost due to abandoned carts.
-- Helps Product, Growth, and Marketing teams prioritize high-impact checkout improvements.
-- Supports data-driven decisions for cart recovery campaigns and promotional strategies.
+- Identifies which cart-value segments contribute the greatest revenue leakage.
+- Quantifies GMV lost because of abandoned carts.
+- Enables Product, Marketing, and Growth teams to prioritize high-impact checkout improvements.
 
 ## Recommended Action
 
 Prioritize checkout optimization for the **₹5,000–₹14,999** segment because it represents the largest revenue recovery opportunity. For lower-value carts, consider targeted promotions such as free-shipping thresholds or limited-time incentives to reduce the **53%** abandonment rate.
-
 ---
 
-# S1 – MRR Movements
+# S1 – Monthly Recurring Revenue (MRR) Movements
 
 ## Business Question
-What factors increased or decreased Monthly Recurring Revenue?
+
+What factors contributed to increases and decreases in Monthly Recurring Revenue (MRR)?
 
 ## What This Analysis Shows
-Breaks monthly MRR into New, Expansion, Contraction, Churn, and Reactivation components.
+
+The analysis decomposes monthly revenue into **New MRR, Expansion MRR, Contraction MRR, Churn MRR, and Reactivation MRR**, with a running ending MRR balance. The reconciliation confirms that each month's ending MRR equals the previous month's ending MRR plus net revenue movements, providing confidence in the reported metrics.
 
 ## Business Value
-- Explains monthly revenue changes.
-- Tracks business growth.
-- Supports financial forecasting.
+
+- Explains the drivers of recurring revenue growth and decline.
+- Supports Finance and Revenue Operations reporting.
+- Provides a reliable monthly reconciliation of MRR movements.
 
 ## Recommended Action
-Reduce churn while increasing expansion opportunities through upselling and customer success initiatives.
 
+Monitor months where **Churn MRR** and **Contraction MRR** exceed **Expansion MRR**. Investigate customer health, renewal risk, and expansion opportunities before revenue declines become persistent.
 ---
 
 # S2 – Trial Conversion
 
 ## Business Question
-How quickly do trial users become paying customers?
+
+How quickly do trial accounts convert into paying customers?
 
 ## What This Analysis Shows
-Measures conversion within 14, 30, and 60 days and highlights trial effectiveness.
+
+Several cohorts achieved **100% conversion within 14 days**, while others converted between **25% and 50%**, indicating significant variation in onboarding effectiveness across signup cohorts.
 
 ## Business Value
-- Evaluates onboarding success.
-- Measures trial quality.
-- Supports product-led growth.
+
+- Measures the effectiveness of the trial experience.
+- Identifies high-performing and low-performing onboarding cohorts.
+- Supports Product and Growth teams in improving trial conversion.
 
 ## Recommended Action
-Improve onboarding for cohorts with low conversion and shorten the time to first value.
 
+Compare onboarding journeys for cohorts with **100% 14-day conversion** against cohorts below **50%**, focusing on activation emails, in-app guidance, and early product engagement.
 ---
 
-# S3 – GRR & NRR
+# S3 – Gross Revenue Retention (GRR) & Net Revenue Retention (NRR)
 
 ## Business Question
-How much recurring revenue is retained after 12 months?
+
+How effectively is recurring revenue retained and expanded over a 12-month period?
 
 ## What This Analysis Shows
-Calculates Gross Revenue Retention (GRR) and Net Revenue Retention (NRR) by customer cohort.
+
+The **September 2022** cohort achieved **92.64% Gross Revenue Retention (GRR)** and **113.95% Net Revenue Retention (NRR)**. This indicates that expansion revenue more than offset revenue lost through churn and contraction within that cohort.
 
 ## Business Value
-- Measures customer retention.
-- Quantifies revenue expansion.
-- Supports executive reporting.
+
+- Measures long-term customer revenue health.
+- Separates revenue retention from revenue expansion.
+- Supports Customer Success and Revenue teams in evaluating account growth.
 
 ## Recommended Action
-Focus on reducing contraction and churn while increasing expansion revenue.
 
+Replicate the expansion strategies observed in high-performing cohorts while investigating cohorts with lower GRR to reduce churn and contraction.
 ---
 
 # S4 – Feature Adoption
 
 ## Business Question
-Which product features have the strongest adoption and retention?
+
+Is early feature adoption associated with stronger 90-day customer retention?
 
 ## What This Analysis Shows
-Measures feature usage across accounts and compares retention between adopters and non-adopters.
+
+The analysis evaluates feature adoption using the assignment definition of **three or more feature uses within the first 14 days after signup**. Applying this definition resulted in a very small qualifying adopter population in the current dataset, limiting meaningful comparison between adopters and non-adopters.
 
 ## Business Value
-- Identifies valuable product features.
-- Supports roadmap prioritization.
-- Improves customer engagement.
+
+- Demonstrates a structured framework for measuring feature adoption and retention.
+- Highlights the importance of validating analytical definitions against real data.
+- Provides a reusable approach for future datasets with higher early-adoption volumes.
 
 ## Recommended Action
-Increase visibility and onboarding for features associated with higher retention.
 
+Retain the current adoption definition for consistency with the assignment. For production analysis, validate whether the adoption threshold or observation window should be adjusted based on actual customer behavior before drawing business conclusions.
 ---
 
 # S5 – Expansion Revenue
 
 ## Business Question
-Where does expansion revenue originate?
+
+Which expansion motions contribute the most recurring revenue growth?
 
 ## What This Analysis Shows
-Analyzes revenue generated through plan upgrades, seat expansion, and add-on purchases.
+
+Seat Expansion generated **$28,259 MRR**, exceeding **Plan Upgrades ($24,042.16)** and **Add-ons ($3,467)**. This indicates that increasing seat count is the primary driver of expansion revenue in the current analysis.
 
 ## Business Value
-- Explains revenue growth drivers.
-- Supports pricing strategy.
-- Identifies upsell opportunities.
+
+- Explains the composition of expansion revenue.
+- Helps Revenue and Customer Success teams prioritize account growth strategies.
+- Supports planning for upsell and cross-sell initiatives.
 
 ## Recommended Action
-Promote upgrade paths and seat expansion programs for high-value customer segments.
+
+Prioritize customer growth strategies that encourage seat expansion while continuing to optimize upgrade paths and add-on adoption for additional recurring revenue.
+---
+

@@ -6,6 +6,41 @@ The SaaS schema contains 17 active business tables (excluding legacy tables). Th
 
 ---
 
+## Entity Relationship Diagram
+
+```mermaid
+erDiagram
+
+ACCOUNTS ||--o{ SUBSCRIPTIONS : owns
+ACCOUNTS ||--o{ EVENTS : generates
+ACCOUNTS ||--o{ TRIALS : starts
+
+SUBSCRIPTIONS }o--|| PLANS : uses
+
+EVENTS }o--|| FEATURES : interacts_with
+
+FEATURES {
+    int feature_id
+    string feature_name
+}
+
+EVENTS {
+    int event_id
+    bigint account_id
+    int feature_id
+}
+
+ACCOUNTS {
+    bigint account_id
+    date signup_date
+}
+
+SUBSCRIPTIONS {
+    int subscription_id
+    decimal mrr
+}
+```
+
 # Table Inventory
 
 | Table | Approximate Rows | Purpose |

@@ -115,8 +115,7 @@ Below are selected Metabase dashboards created as part of this project.
 
 ## Customer Activation (E1)
 
-![Activation Curve](images/<img width="607" height="375" alt="e1_activation_curve" src="https://github.com/user-attachments/assets/f5012cc0-58a5-49f1-a445-49db6b491a52" />
-)
+![E1 – Activation Curve](images/e1_activation_curve.png)
 
 **Key Insight:** Customer activation peaked at **21.67% within 7 days**, while recent cohorts show lower activation because their observation windows are still incomplete.
 
@@ -124,8 +123,7 @@ Below are selected Metabase dashboards created as part of this project.
 
 ## Checkout Funnel (E2)
 
-![Checkout Funnel](images/<img width="681" height="353" alt="e2_checkout_funnel" src="https://github.com/user-attachments/assets/09a4b7d8-4ed4-4983-9c7c-705078d1a6f7" />
-)
+![E2 – Checkout Funnel](images/e2_checkout_funnel.png)
 
 **Key Insight:** The largest customer drop-off occurs at the **final Purchase stage (7.56%–8.30%)**, making it the highest-impact opportunity for conversion optimization.
 
@@ -133,8 +131,7 @@ Below are selected Metabase dashboards created as part of this project.
 
 ## Monthly Recurring Revenue (S1)
 
-![MRR Movements](images/<img width="569" height="383" alt="s1_mrr_movements" src="https://github.com/user-attachments/assets/d186371c-bc7d-4a68-9bce-8ed2902a51ef" />
-)
+![S1 – MRR Movements](images/s1_mrr_movements.png)
 
 **Key Insight:** Monthly recurring revenue was driven by a combination of new subscriptions, customer expansion, contraction, churn, and reactivation, providing Finance with a complete revenue movement breakdown.
 
@@ -142,8 +139,7 @@ Below are selected Metabase dashboards created as part of this project.
 
 ## Gross Revenue Retention (S3)
 
-![GRR NRR](images/<img width="758" height="381" alt="s3_grr_nrr" src="https://github.com/user-attachments/assets/3304feb8-64ef-49f8-95ec-e9a59ebdc096" />
-)
+![S3 – GRR & NRR](images/s3_grr_nrr.png)
 
 **Key Insight:** The **September 2022** cohort achieved **92.64% GRR** and **113.95% NRR**, indicating that expansion revenue more than compensated for churn and contraction.
 
@@ -151,10 +147,9 @@ Below are selected Metabase dashboards created as part of this project.
 
 ## Expansion Revenue (S5)
 
-![Expansion Revenue](images/<img width="449" height="296" alt="s5_expansion_revenue" src="https://github.com/user-attachments/assets/621b84cf-471d-4c7c-9fc5-572967ce8b85" />
-)
+![S5 – Expansion Revenue](images/s5_expansion_revenue.png)
 
-**Key Insight:** **Seat Expansion contributed $28,259 MRR**, outperforming both plan upgrades (**$19,281**) and add-ons (**$3,467**), making it the primary expansion revenue source.
+**Key Insight:** **Seat Expansion contributed $28,259 MRR**, outperforming both plan upgrades (**$24,042.16**) and add-ons (**$3,467**), making it the primary expansion revenue source.
 
 ## Repository Structure
 

@@ -188,9 +188,9 @@ Recent activation, retention and trial-conversion cohorts may be incomplete beca
 
 ## Portfolio Case Study
 
-📖 Notion Case Study:
+**B2C vs B2B: How Funnels and Retention Actually Differ**
 
-https://catkin-blizzard-6a0.notion.site/B2C-vs-B2B-How-Funnels-and-Retention-Actually-Differ-3b23f4c48c888018bd36fd809e6bee44?source=copy_link 
+[View the public Notion case study](https://catkin-blizzard-6a0.notion.site/B2C-vs-B2B-How-Funnels-and-Retention-Actually-Differ-3b23f4c48c888018bd36fd809e6bee44?source=copy_link)
 
 ---
 

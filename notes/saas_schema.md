@@ -309,5 +309,3 @@ Verified subscription lifecycle events including:
 # Summary
 
 The SaaS schema is designed around customer accounts, subscriptions, product usage, and billing. Subscription history is maintained through lifecycle events, while MRR movements are captured separately using subscription_events. The schema is well suited for product analytics, revenue analysis, feature adoption, churn analysis, and customer lifecycle reporting.
-
-The SaaS schema is designed around customer accounts, subscriptions, product usage, and billing. Subscription history is maintained through lifecycle events, while MRR movements are captured separately using subscription_events. The schema is well suited for product analytics, revenue analysis, feature adoption, churn analysis, and customer lifecycle reporting.

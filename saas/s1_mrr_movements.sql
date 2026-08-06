@@ -1,23 +1,33 @@
 /*
+S1 — Monthly MRR Movement Decomposition
+
 Business Question:
 How did Monthly Recurring Revenue change each month, and what drove
 the movement: new, expansion, contraction, churn, or reactivation?
 
 What This Tells Us:
-This query decomposes monthly MRR movement and calculates Net New MRR
-and the cumulative Ending MRR balance.
+This query classifies subscription events into the five canonical MRR
+movement buckets and calculates Net New MRR and cumulative Ending MRR.
 
 PM Action:
-Investigate the month with the largest negative churn or contraction
-movement by account type, plan, and customer cohort.
+Identify the month with the largest churn or contraction movement,
+then segment the affected accounts by account type, plan, and signup
+cohort to determine whether the loss came from a specific customer
+segment or subscription tier.
 
 Sanity Check:
-Ending MRR for month N should equal the previous month's Ending MRR
-plus the current month's Net New MRR.
+1. Ending MRR for month N must equal the previous month's Ending MRR
+   plus the current month's Net New MRR.
+2. Expansion MRR must reconcile with S5 for the same reporting window.
+3. Events after 15-Jun-2026 must be excluded.
 */
 
-WITH eligible_events AS (
+WITH parameters AS (
+    SELECT
+        TIMESTAMP '2026-06-15 23:59:59' AS reporting_cutoff
+),
 
+eligible_events AS (
     SELECT
         se.event_id,
         se.account_id,
@@ -27,14 +37,15 @@ WITH eligible_events AS (
         se.to_plan,
         COALESCE(se.mrr_delta, 0) AS mrr_delta,
         se.seats_delta
+
     FROM saas.subscription_events AS se
 
-    -- Exclude future-dated legacy events
-    WHERE se.event_time < CURRENT_DATE + INTERVAL '1 day'
+    CROSS JOIN parameters AS p
+
+    WHERE se.event_time <= p.reporting_cutoff
 ),
 
 classified_events AS (
-
     SELECT
         DATE_TRUNC('month', e.event_time)::date AS month,
         e.account_id,
@@ -42,53 +53,70 @@ classified_events AS (
         e.mrr_delta,
 
         CASE
-            -- Reactivation: the account previously cancelled and later restarted
+            /*
+            Reactivation:
+            A positive subscription start or trial conversion after
+            the same account previously cancelled.
+            */
             WHEN e.event_type IN (
                     'subscription_started',
                     'trial_converted'
                  )
-                 AND e.mrr_delta > 0
-                 AND EXISTS (
-                     SELECT 1
-                     FROM eligible_events AS previous_event
-                     WHERE previous_event.account_id = e.account_id
-                       AND previous_event.event_type = 'cancelled'
-                       AND previous_event.event_time < e.event_time
+             AND e.mrr_delta > 0
+             AND EXISTS (
+                    SELECT 1
+                    FROM eligible_events AS previous_event
+                    WHERE previous_event.account_id = e.account_id
+                      AND previous_event.event_type = 'cancelled'
+                      AND previous_event.event_time < e.event_time
                  )
                 THEN 'reactivation_mrr'
 
-            -- First paid subscription
+            /*
+            New MRR:
+            The first positive paid start for an account.
+            */
             WHEN e.event_type IN (
                     'subscription_started',
                     'trial_converted'
                  )
-                 AND e.mrr_delta > 0
+             AND e.mrr_delta > 0
                 THEN 'new_mrr'
 
-            -- Seat additions and add-ons
+            /*
+            Expansion MRR:
+            Positive plan changes, seat additions, and add-ons.
+            */
             WHEN e.event_type IN (
                     'seat_add',
                     'addon_attach'
                  )
-                 AND e.mrr_delta > 0
+             AND e.mrr_delta > 0
                 THEN 'expansion_mrr'
 
-            -- Plan upgrade
             WHEN e.event_type = 'plan_changed'
-                 AND e.mrr_delta > 0
+             AND e.mrr_delta > 0
                 THEN 'expansion_mrr'
 
-            -- Plan downgrade
+            /*
+            Contraction MRR:
+            Negative plan changes.
+            */
             WHEN e.event_type = 'plan_changed'
-                 AND e.mrr_delta < 0
+             AND e.mrr_delta < 0
                 THEN 'contraction_mrr'
 
-            -- Cancellation
+            /*
+            Churn MRR:
+            Negative cancellation movements.
+            */
             WHEN e.event_type = 'cancelled'
-                 AND e.mrr_delta < 0
+             AND e.mrr_delta < 0
                 THEN 'churn_mrr'
 
-            -- Free subscriptions, trial starts and zero-MRR events
+            /*
+            Excludes free starts, trial starts, and zero-MRR events.
+            */
             ELSE 'excluded'
         END AS mrr_bucket
 
@@ -96,7 +124,6 @@ classified_events AS (
 ),
 
 monthly_movements AS (
-
     SELECT
         month,
 
@@ -141,11 +168,11 @@ monthly_movements AS (
         ) AS reactivation_mrr
 
     FROM classified_events
+
     GROUP BY month
 ),
 
 net_mrr_movements AS (
-
     SELECT
         month,
         new_mrr,
@@ -165,7 +192,6 @@ net_mrr_movements AS (
 
 SELECT
     month,
-
     ROUND(new_mrr, 2) AS new_mrr,
     ROUND(expansion_mrr, 2) AS expansion_mrr,
     ROUND(contraction_mrr, 2) AS contraction_mrr,
@@ -182,4 +208,5 @@ SELECT
     ) AS ending_mrr
 
 FROM net_mrr_movements
+
 ORDER BY month;

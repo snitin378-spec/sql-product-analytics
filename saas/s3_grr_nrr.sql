@@ -1,57 +1,69 @@
 /*
+S3 — Gross Revenue Retention and Net Revenue Retention by Cohort
+
 Business Question:
 For each monthly customer cohort, how much of the original MRR
 remained after 12 months, and how much changed through expansion,
-contraction or churn?
+contraction, or churn?
 
 What This Tells Us:
-GRR shows how much starting revenue was retained without counting
-expansion. NRR shows total revenue retained after including expansion.
+GRR measures how much starting revenue remains after churn and
+contraction, excluding expansion. NRR includes expansion and shows
+whether retained accounts grew enough to offset lost revenue.
 
 PM Action:
-If GRR is below 80%, investigate churn and contraction by account type,
-plan and cohort. If NRR is above 110%, identify the accounts and
-expansion motions driving the increase.
+The September 2022 cohort previously produced 92.64% GRR and
+113.95% NRR. Review the account types, plans, seat additions, and
+upgrade events in that cohort to identify the expansion behaviour
+that pushed NRR above 100%, then test whether the same customer-success
+motion can be applied to lower-performing cohorts.
 
 Sanity Checks:
-1. GRR must never exceed 100%.
-2. NRR may exceed 100%.
+1. GRR must never exceed 1.0.
+2. NRR may exceed 1.0.
 3. retained_mrr_12m + contraction_mrr_12m + churn_mrr_12m
-   should approximately equal cohort_starting_mrr.
+   should equal cohort_starting_mrr.
 4. ending_mrr_12m =
    retained_mrr_12m + expansion_mrr_12m.
+5. Only cohorts with a complete 12-month observation window as of
+   15-Jun-2026 are included.
 */
 
-WITH eligible_events AS (
-
+WITH parameters AS (
     SELECT
-        event_id,
-        account_id,
-        event_type,
-        event_time,
-        mrr_delta
-    FROM saas.subscription_events
-    WHERE account_id IS NOT NULL
+        TIMESTAMP '2026-06-15 23:59:59' AS reporting_cutoff
+),
 
-      -- Exclude future-dated legacy events
-      AND event_time < CURRENT_DATE + INTERVAL '1 day'
+eligible_events AS (
+    SELECT
+        se.event_id,
+        se.account_id,
+        se.event_type,
+        se.event_time,
+        COALESCE(se.mrr_delta, 0) AS mrr_delta
+
+    FROM saas.subscription_events AS se
+
+    CROSS JOIN parameters AS p
+
+    WHERE se.account_id IS NOT NULL
+      AND se.event_time <= p.reporting_cutoff
 ),
 
 first_paid_event AS (
-
     /*
-    Find the first positive paid event for each account.
+    Find each account's first positive paid event.
 
-    ROW_NUMBER is safer than joining only on MIN(event_time),
-    because two events could share the same timestamp.
+    ROW_NUMBER avoids duplicate matches if multiple events share
+    the same timestamp.
     */
-
     SELECT
         account_id,
         event_id,
         event_time AS first_paid_at,
         DATE_TRUNC('month', event_time)::date AS cohort_month,
         mrr_delta AS starting_mrr
+
     FROM (
         SELECT
             account_id,
@@ -65,6 +77,7 @@ first_paid_event AS (
             ) AS paid_event_number
 
         FROM eligible_events
+
         WHERE event_type IN (
                   'subscription_started',
                   'trial_converted'
@@ -75,69 +88,70 @@ first_paid_event AS (
     WHERE paid_event_number = 1
 ),
 
-account_mrr_after_12m AS (
-
+mature_first_paid_accounts AS (
     /*
-    Reconstruct each account's MRR after 12 months by adding all
-    signed MRR movements from its first paid event through the
-    12-month anniversary.
-
-    Positive movements add MRR.
-    Negative movements reduce MRR.
+    Include only accounts whose complete 12-month observation
+    window had closed by the reporting cutoff.
     */
-
     SELECT
         fp.account_id,
         fp.cohort_month,
         fp.first_paid_at,
         fp.starting_mrr,
+        fp.first_paid_at + INTERVAL '12 months' AS twelve_month_date
 
-        fp.first_paid_at + INTERVAL '12 months'
-            AS twelve_month_date,
+    FROM first_paid_event AS fp
+
+    CROSS JOIN parameters AS p
+
+    WHERE fp.first_paid_at + INTERVAL '12 months'
+          <= p.reporting_cutoff
+),
+
+account_mrr_after_12m AS (
+    /*
+    Reconstruct MRR at the account's 12-month anniversary by
+    summing all signed MRR movements from first paid event through
+    the anniversary date.
+    */
+    SELECT
+        mfp.account_id,
+        mfp.cohort_month,
+        mfp.first_paid_at,
+        mfp.starting_mrr,
+        mfp.twelve_month_date,
 
         SUM(
             COALESCE(e.mrr_delta, 0)
         ) AS calculated_mrr_12m
 
-    FROM first_paid_event AS fp
+    FROM mature_first_paid_accounts AS mfp
 
     LEFT JOIN eligible_events AS e
-        ON e.account_id = fp.account_id
-       AND e.event_time >= fp.first_paid_at
-       AND e.event_time <= fp.first_paid_at + INTERVAL '12 months'
-
-    /*
-    Exclude immature cohorts whose full 12-month observation
-    period has not yet closed.
-    */
-    WHERE fp.first_paid_at + INTERVAL '12 months'
-          < CURRENT_DATE + INTERVAL '1 day'
+        ON e.account_id = mfp.account_id
+       AND e.event_time >= mfp.first_paid_at
+       AND e.event_time <= mfp.twelve_month_date
 
     GROUP BY
-        fp.account_id,
-        fp.cohort_month,
-        fp.first_paid_at,
-        fp.starting_mrr
+        mfp.account_id,
+        mfp.cohort_month,
+        mfp.first_paid_at,
+        mfp.starting_mrr,
+        mfp.twelve_month_date
 ),
 
 account_retention_components AS (
-
-    /*
-    Prevent negative ending MRR caused by unusual or duplicated
-    negative events. Economically, an account cannot have MRR below 0.
-    */
-
     SELECT
         account_id,
         cohort_month,
         starting_mrr,
 
-        GREATEST(calculated_mrr_12m, 0) AS ending_mrr_12m,
+        GREATEST(calculated_mrr_12m, 0)
+            AS ending_mrr_12m,
 
         /*
-        Retained base revenue:
-        The smaller of starting and ending MRR, provided the account
-        is still paying.
+        Retained base MRR is capped at starting MRR.
+        Expansion is calculated separately.
         */
         CASE
             WHEN calculated_mrr_12m > 0
@@ -146,8 +160,7 @@ account_retention_components AS (
         END AS retained_mrr_12m,
 
         /*
-        Expansion:
-        Ending MRR above starting MRR.
+        Expansion occurs when ending MRR exceeds starting MRR.
         */
         CASE
             WHEN calculated_mrr_12m > starting_mrr
@@ -156,8 +169,8 @@ account_retention_components AS (
         END AS expansion_mrr_12m,
 
         /*
-        Contraction:
-        Account still pays, but less than it originally paid.
+        Contraction occurs when the account remains paying,
+        but at a lower MRR.
         */
         CASE
             WHEN calculated_mrr_12m > 0
@@ -167,8 +180,7 @@ account_retention_components AS (
         END AS contraction_mrr_12m,
 
         /*
-        Churn:
-        Account's ending MRR is zero.
+        Churn occurs when ending MRR is zero or below.
         */
         CASE
             WHEN calculated_mrr_12m <= 0
@@ -180,25 +192,31 @@ account_retention_components AS (
 ),
 
 cohort_retention AS (
-
     SELECT
         cohort_month,
 
         COUNT(*) AS cohort_accounts,
 
-        SUM(starting_mrr) AS cohort_starting_mrr,
+        SUM(starting_mrr)
+            AS cohort_starting_mrr,
 
-        SUM(retained_mrr_12m) AS retained_mrr_12m,
+        SUM(retained_mrr_12m)
+            AS retained_mrr_12m,
 
-        SUM(expansion_mrr_12m) AS expansion_mrr_12m,
+        SUM(expansion_mrr_12m)
+            AS expansion_mrr_12m,
 
-        SUM(contraction_mrr_12m) AS contraction_mrr_12m,
+        SUM(contraction_mrr_12m)
+            AS contraction_mrr_12m,
 
-        SUM(churn_mrr_12m) AS churn_mrr_12m,
+        SUM(churn_mrr_12m)
+            AS churn_mrr_12m,
 
-        SUM(ending_mrr_12m) AS ending_mrr_12m
+        SUM(ending_mrr_12m)
+            AS ending_mrr_12m
 
     FROM account_retention_components
+
     GROUP BY cohort_month
 )
 
@@ -224,14 +242,6 @@ SELECT
     ROUND(ending_mrr_12m, 2)
         AS ending_mrr_12m,
 
-    /*
-    GRR excludes expansion.
-    This is equivalent to:
-
-    starting MRR - contraction - churn
-    ----------------------------------
-               starting MRR
-    */
     ROUND(
         (
             cohort_starting_mrr
@@ -242,22 +252,12 @@ SELECT
         4
     ) AS grr,
 
-    /*
-    NRR includes expansion.
-
-    ending MRR
-    ----------
-    starting MRR
-    */
     ROUND(
         ending_mrr_12m
         / NULLIF(cohort_starting_mrr, 0),
         4
     ) AS nrr,
 
-    /*
-    Percentage versions for easier reading in Metabase.
-    */
     ROUND(
         (
             cohort_starting_mrr
@@ -277,4 +277,5 @@ SELECT
     ) AS nrr_pct
 
 FROM cohort_retention
+
 ORDER BY cohort_month;

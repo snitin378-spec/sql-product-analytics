@@ -2,14 +2,17 @@
 
 ## Executive Summary
 
-This project contains 10 product analytics SQL case studies across two business models:
+This repository contains 10 end-to-end SQL business case studies across both B2C E-commerce and B2B SaaS products.
 
-- **B2C E-commerce**
-- **B2B and Self-Serve SaaS**
+Key findings include:
 
-The analyses cover activation, conversion funnels, behavioral retention, product engagement, cart abandonment, Monthly Recurring Revenue, trial conversion, revenue retention, feature adoption, and expansion revenue.
+- Customer activation peaked at **21.67%** before declining in recent cohorts.
+- Checkout consistently lost **7.56%–8.30%** of customers at the final purchase step.
+- Week-1 retention reached **36.30%** for the strongest cohort.
+- The September 2022 SaaS cohort achieved **92.64% GRR** and **113.95% NRR**.
+- Seat expansion generated **$28,259.00**, making it the largest recurring revenue growth driver.
 
-The project demonstrates how the same SQL techniques can answer very different business questions depending on the customer journey, unit of analysis, and revenue model.
+The project demonstrates how SQL can answer product, growth, finance, and customer-success questions using production-style analytical techniques.
 
 ---
 
@@ -36,14 +39,14 @@ The project demonstrates how the same SQL techniques can answer very different b
 | 🔄 Weekly Retention | Week-1 retention peaked at **36.30%** (May 11 cohort), while recent cohorts naturally show lower later-week retention due to incomplete observation windows. | Highlights customer engagement patterns and cohort maturity effects. |
 | 💰 Trial Conversion | Multiple cohorts achieved **100% conversion within 14 days**, while others ranged from **25%–50%**, showing significant variation in onboarding effectiveness. | Helps Product and Growth teams identify high-performing onboarding cohorts. |
 | 📈 Revenue Retention | September 2022 cohort achieved **GRR 92.64%** and **NRR 113.95%**, showing expansion revenue more than offset customer losses. | Demonstrates strong expansion opportunities among retained customers. |
-| 💵 Expansion Revenue | **Seat Expansion generated $28,259 MRR**, exceeding **Plan Upgrades ($19,281)** and **Add-ons ($3,467)**. | Indicates that customer growth through additional seats is the strongest expansion driver. |
+| 💵 Expansion Revenue | **Seat Expansion generated $28,259 MRR**, exceeding **Plan Upgrades ($19,360.02)** and **Add-ons ($3,466.80)**. | Indicates that customer growth through additional seats is the strongest expansion driver. |
 
 ### Business Impact
 
 - Solved **10 real-world product analytics problems**
 - Covered both **B2C (E-commerce)** and **B2B (SaaS)** analytics
 - Demonstrated advanced SQL using CTEs, Window Functions, Cohort Analysis, Funnel Analysis, and Revenue Analytics
-- Every analysis includes a Business Question, Business Interpretation, PM Action, and Sanity Check
+- Every analysis includes a Business Question, What This Tells Us, PM Action, and Sanity Check.
 
 | Analysis | Key Business Question |
 |---|---|
@@ -64,16 +67,16 @@ The project demonstrates how the same SQL techniques can answer very different b
 
 | Query | Stakeholder Question | Key Business Insight | SQL Concepts |
 |------|----------------------|----------------------|-------------|
-| E1 – Activation Curve | How quickly do customers activate after signup? | Measures onboarding effectiveness across customer cohorts. | Cohort Analysis, Window Functions |
-| E2 – Checkout Funnel | Where do customers abandon checkout? | Identifies the highest drop-off stage in the purchase journey. | Conditional Aggregation |
-| E3 – Weekly Retention | Do customers return after signup? | Measures long-term customer engagement. | Window Functions |
+| E1 – Activation Curve | How quickly do customers activate after signup? | Activation peaked at 21.67% before declining to 8.79% in the latest cohort. | Cohort Analysis, Window Functions |
+| E2 – Checkout Funnel | Where do customers abandon checkout? | Final purchase step consistently loses 7.56%–8.30% of customers. | Conditional Aggregation |
+| E3 – Weekly Retention | Do customers return after signup? | Week-1 retention reached 36.30% in the strongest cohort. | Window Functions |
 | E4 – PDP Engagement | Which products have high traffic but poor conversion? | Highlights products requiring merchandising improvements. | Product Analytics |
 | E5 – Cart Abandonment | Which carts generate the highest lost revenue? | Quantifies revenue leakage across cart-value segments. | Session Analytics |
 | S1 – MRR Movements | What drives monthly revenue growth? | Breaks MRR into New, Expansion, Churn, Contraction, and Reactivation. | Revenue Analytics |
 | S2 – Trial Conversion | How quickly do trials become paid customers? | Measures trial effectiveness and conversion speed. | Cohort Analysis |
 | S3 – GRR & NRR | How much recurring revenue is retained after one year? | Measures customer revenue retention and expansion. | Revenue Retention |
-| S4 – Feature Adoption | Which product features improve retention? | Compares adoption rates and customer retention. | Product Analytics |
-| S5 – Expansion Revenue | Where does expansion revenue originate? | Explains revenue growth from upgrades, seats, and add-ons. | Revenue Growth |
+| S4 – Feature Adoption | Which product features are associated with stronger retention? | Compares retention between feature adopters and eligible non-adopters. | Product Analytics |
+| S5 – Expansion Revenue | Where does expansion revenue originate? | Seat additions generated $28,259.00, becoming the largest expansion revenue driver. | Revenue Growth |
 
 ---
 
@@ -149,7 +152,7 @@ Below are selected Metabase dashboards created as part of this project.
 
 ![S5 – Expansion Revenue](images/s5_expansion_revenue.png)
 
-**Key Insight:** **Seat Expansion contributed $28,259 MRR**, outperforming both plan upgrades (**$24,042.16**) and add-ons (**$3,467**), making it the primary expansion revenue source.
+**Key Insight:** Seat additions generated **$28,259.00** in expansion MRR, followed by **Plan Upgrades ($19,360.02)** and **Add-ons ($3,466.80)**. Together they reconcile exactly with the S1 expansion total of **$51,085.82**.
 
 ## Repository Structure
 

@@ -11,35 +11,67 @@ The SaaS schema contains 17 active business tables (excluding legacy tables). Th
 ```mermaid
 erDiagram
 
+ACCOUNTS ||--o{ USERS : contains
 ACCOUNTS ||--o{ SUBSCRIPTIONS : owns
 ACCOUNTS ||--o{ EVENTS : generates
 ACCOUNTS ||--o{ TRIALS : starts
+ACCOUNTS ||--o{ INVOICES : receives
 
-SUBSCRIPTIONS }o--|| PLANS : uses
+USERS ||--o{ SUBSCRIPTIONS : may_hold
+USERS ||--o{ EVENTS : performs
 
-EVENTS }o--|| FEATURES : interacts_with
+PLANS ||--o{ SUBSCRIPTIONS : defines
+SUBSCRIPTIONS ||--o{ SUBSCRIPTION_EVENTS : generates
+SUBSCRIPTIONS ||--o{ PAYMENT_ATTEMPTS : receives
 
-FEATURES {
-    int feature_id
-    string feature_name
-}
-
-EVENTS {
-    int event_id
-    bigint account_id
-    int feature_id
-}
+FEATURES ||--o{ EVENTS : referenced_by
 
 ACCOUNTS {
     bigint account_id
-    date signup_date
+    text account_type
+    timestamp signup_date
+}
+
+USERS {
+    bigint user_id
+    bigint account_id
 }
 
 SUBSCRIPTIONS {
     int subscription_id
-    decimal mrr
+    bigint account_id
+    int user_id
+    int plan_id
+    numeric mrr
+    text status
 }
-```
+
+SUBSCRIPTION_EVENTS {
+    bigint event_id
+    int subscription_id
+    bigint account_id
+    timestamp event_time
+    numeric mrr_delta
+}
+
+EVENTS {
+    int event_id
+    int user_id
+    bigint account_id
+    int feature_id
+    timestamp occurred_at
+}
+
+FEATURES {
+    int feature_id
+    text feature_name
+}
+
+PLANS {
+    int plan_id
+    text plan_name
+    numeric monthly_price
+}
 
 # Table Inventory
 
@@ -203,21 +235,29 @@ Use LEFT JOIN when joining to plans.
 
 ## Finding 3
 
-566 product events have no matching user.
+566 product usage events contain a NULL `account_id`.
+
+These rows are unattributed events. They are not confirmed orphan users because a missing `account_id` is different from a `user_id` that does not match the users table.
 
 Recommendation:
 
-Exclude orphan events from user-level analysis.
+Exclude rows with NULL `account_id` from account-level analyses such as feature adoption and account retention. For user-level analysis, separately validate whether `user_id` exists in the users table before classifying an event as orphaned.
 
 ---
 
 ## Finding 4
 
-226 subscription events occur after 15-Jun-2026.
+226 subscription events occur after the official dataset boundary of 15-Jun-2026.
+
+Including these future-dated rows causes SaaS metrics to change depending on the date the query is executed. This affected MRR movements, GRR/NRR cohorts, and expansion-revenue totals.
 
 Recommendation:
 
-Apply a reporting cutoff date for historical analysis.
+Use the following fixed reporting cutoff in all historical SaaS revenue queries:
+
+`2026-06-15 23:59:59`
+
+This cutoff is applied consistently in S1, S3, S4, and S5 to ensure reproducible results.
 
 ---
 
@@ -225,56 +265,56 @@ Apply a reporting cutoff date for historical analysis.
 
 ## accounts
 
-- account_id – Customer account identifier
-- account_type – Self-Serve or B2B
-- industry – Customer industry
-- country – Customer country
-- signup_date – Account creation date
-- acquisition_channel – Customer acquisition source
+- `account_id` – Unique identifier for a customer account and the main key used for account-level SaaS analysis.
+- `account_type` – Identifies whether the customer follows a self-serve or B2B commercial model.
+- `industry` – Industry segment used for customer segmentation and retention analysis.
+- `country` – Customer location used for regional analysis.
+- `signup_date` – Date the account entered the product; used as the starting point for cohorts, activation, adoption, and retention windows.
+- `acquisition_channel` – Marketing or sales channel that acquired the account.
 
 ## users
 
-- user_id – User identifier
-- account_id – Parent account
-- signup_date – User registration date
-- signup_source – Signup source
-- plan_type – User plan
-- is_active – User status
-- last_login_date – Last login
+- `user_id` – Unique identifier for an individual product user.
+- `account_id` – Links a user to the customer account they belong to.
+- `signup_date` – Date the individual user registered for the product.
+- `signup_source` – Source or workflow through which the user registered.
+- `plan_type` – User-level plan classification where applicable.
+- `is_active` – Current user activity flag; this should not be used as a replacement for historical retention logic.
+- `last_login_date` – Most recent recorded login date, useful for engagement and inactivity analysis.
 
 ## subscriptions
 
-- subscription_id – Subscription identifier
-- account_id – Customer account
-- user_id – User identifier
-- plan – Plan name
-- plan_id – Plan identifier
-- mrr – Monthly recurring revenue
-- seat_count – Licensed seats
-- status – Subscription status
-- start_date – Subscription start
-- end_date – Subscription end
-- cancelled_at – Cancellation timestamp
+- `subscription_id` – Unique identifier for a subscription record.
+- `account_id` – Links the subscription to the customer account responsible for payment.
+- `user_id` – Links self-serve subscriptions to an individual user; it may be NULL for account-level B2B subscriptions.
+- `plan` – Stored plan label, which requires normalization because casing is inconsistent.
+- `plan_id` – Links the subscription to the plans catalogue; some values are NULL, so joins must preserve unmatched subscriptions.
+- `mrr` – Monthly recurring revenue associated with the subscription. Used for subscription snapshots, GRR, NRR, and revenue validation.
+- `seat_count` – Number of licensed seats included in the subscription.
+- `status` – Current lifecycle state, such as active, churned, trialing, past due, or paused.
+- `start_date` – Date from which the subscription became effective.
+- `end_date` – Date the subscription stopped being active, where available.
+- `cancelled_at` – Timestamp of cancellation, used to determine whether a subscription was alive at a historical point in time.
 
 ## subscription_events
 
-- subscription_id – Subscription identifier
-- account_id – Customer account
-- user_id – User identifier
-- event_type – Lifecycle event
-- event_time – Event timestamp
-- from_plan – Previous plan
-- to_plan – New plan
-- mrr_delta – Revenue change
-- seats_delta – Seat change
+- `subscription_id` – Subscription affected by the lifecycle event.
+- `account_id` – Account affected by the subscription movement.
+- `user_id` – User associated with the event where the subscription is user-level.
+- `event_type` – Type of lifecycle change, such as subscription start, plan change, cancellation, seat addition, or trial conversion.
+- `event_time` – Timestamp used to order subscription movements and build historical MRR balances.
+- `from_plan` – Plan held before a plan-change event.
+- `to_plan` – Plan held after a plan-change event.
+- `mrr_delta` – Signed change in recurring revenue. Positive values represent growth; negative values represent contraction or churn.
+- `seats_delta` – Signed change in licensed seat count.
 
 ## plans
 
-- plan_id – Plan identifier
-- plan_name – Plan name
-- monthly_price – Monthly catalogue price
-- seat_limit – Maximum seats
-- billing_interval – Monthly or Annual
+- `plan_id` – Unique identifier for a catalogue plan.
+- `plan_name` – Standard catalogue name of the plan.
+- `monthly_price` – Published monthly list price, which may differ from actual subscription MRR.
+- `seat_limit` – Maximum seats allowed under the plan.
+- `billing_interval` – Frequency at which the plan is billed, such as monthly or annual.
 
 ---
 

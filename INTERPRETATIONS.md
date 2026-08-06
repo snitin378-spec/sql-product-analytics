@@ -175,21 +175,26 @@ Replicate the expansion strategies observed in high-performing cohorts while inv
 
 ## Business Question
 
-Is early feature adoption associated with stronger 90-day customer retention?
+Is early feature adoption associated with stronger 90-day account retention?
 
 ## What This Analysis Shows
 
-The analysis evaluates feature adoption using the assignment definition of **three or more feature uses within the first 14 days after signup**. Applying this definition resulted in a very small qualifying adopter population in the current dataset, limiting meaningful comparison between adopters and non-adopters.
+The original assignment threshold defined adoption as three or more feature uses within the first 14 days. That threshold produced no usable adopter comparison inside the eligible 90-day observation window.
+
+A documented exploratory threshold of one feature use was therefore used. Under this definition, **API Bulk Operations** had **21 adopters**, with **52.4% retention among adopters versus 29.3% among non-adopters**, a **+23.1 percentage-point lift**.
+
+However, **Zapier Integration** showed the opposite pattern: **13 adopters**, with **30.8% retention among adopters versus 41.2% among non-adopters**, a **−10.4 percentage-point lift**.
 
 ## Business Value
 
-- Demonstrates a structured framework for measuring feature adoption and retention.
-- Highlights the importance of validating analytical definitions against real data.
-- Provides a reusable approach for future datasets with higher early-adoption volumes.
+- Shows that retention association differs by feature.
+- Demonstrates why adoption should not be treated as universally beneficial.
+- Provides a framework for comparing adopters with eligible non-adopters.
+- Highlights the importance of validating adoption thresholds against the available data.
 
 ## Recommended Action
 
-Retain the current adoption definition for consistency with the assignment. For production analysis, validate whether the adoption threshold or observation window should be adjusted based on actual customer behavior before drawing business conclusions.
+Investigate API Bulk Operations as an onboarding candidate, but control for overall activity and account type before making a product decision. Do not conclude that adoption causes retention because more engaged customers may naturally use more features.
 ---
 
 # S5 – Expansion Revenue
@@ -200,16 +205,17 @@ Which expansion motions contribute the most recurring revenue growth?
 
 ## What This Analysis Shows
 
-Seat Expansion generated **$28,259 MRR**, exceeding **Plan Upgrades ($24,042.16)** and **Add-ons ($3,467)**. This indicates that increasing seat count is the primary driver of expansion revenue in the current analysis.
+Seat additions generated **$28,259.00** in expansion MRR, followed by plan upgrades at **$19,360.02** and add-ons at **$3,466.80**. The combined expansion total was **$51,085.82**, which reconciled exactly with S1.
 
 ## Business Value
 
-- Explains the composition of expansion revenue.
-- Helps Revenue and Customer Success teams prioritize account growth strategies.
-- Supports planning for upsell and cross-sell initiatives.
+- Identifies the strongest expansion revenue motion.
+- Supports Customer Success and Revenue Operations planning.
+- Measures expansion revenue per account and time from signup to expansion.
+- Confirms consistent event classification through the S1–S5 tie-out.
 
 ## Recommended Action
 
-Prioritize customer growth strategies that encourage seat expansion while continuing to optimize upgrade paths and add-on adoption for additional recurring revenue.
+Prioritize seat-growth opportunities through improved admin controls, user-invitation workflows, and account-health prompts. Continue testing plan-upgrade and add-on opportunities as secondary expansion motions.
 ---
 

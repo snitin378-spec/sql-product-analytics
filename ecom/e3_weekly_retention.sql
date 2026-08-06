@@ -1,3 +1,31 @@
+/*
+E3 — Weekly Behavioral Retention
+
+Business Question:
+What percentage of each weekly signup cohort returns and performs a
+meaningful product action during Weeks 0 through 4 after signup?
+
+What This Tells Us:
+The query measures behavioral retention using relative week indexes,
+so each customer's activity is compared with their own signup time
+rather than calendar-week boundaries.
+
+PM Action:
+The 11-May-2026 cohort achieved the strongest Week-1 retention at
+36.30%. Compare its first-week behaviours, acquisition channels, and
+meaningful actions with weaker mature cohorts.
+
+If Week-1 retention remains healthy but Week-4 retention declines,
+test a habit-formation intervention such as personalised product
+recommendations or a lifecycle message during Weeks 2–3.
+
+Sanity Check:
+1. Every weekly retained count must be less than or equal to cohort size.
+2. All retention rates must remain between 0 and 1.
+3. Recent cohorts may have incomplete Week-3 or Week-4 observation
+   windows and must be treated as right-censored.
+*/
+
 WITH customer_cohorts AS (
 
     SELECT

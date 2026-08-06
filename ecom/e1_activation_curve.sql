@@ -1,3 +1,30 @@
+/*
+E1 — Activation Curve
+
+Business Question:
+How quickly do newly registered customers complete their first
+meaningful action after signup?
+
+What This Tells Us:
+The query measures 7-day activation by signup cohort and shows how
+onboarding performance changes over time.
+
+PM Action:
+The 18-May-2026 cohort achieved the strongest 7-day activation rate
+at 21.67%, while the latest cohort measured 8.79%.
+
+Separate incomplete observation from a real onboarding decline by
+comparing email delivery, acquisition-channel mix, page performance,
+and onboarding completion between the 18-May cohort and recent cohorts
+after their full 7-day windows close.
+
+Sanity Check:
+1. Activated customers must not exceed total signups.
+2. Activation rate must remain between 0 and 1.
+3. Recent cohorts with incomplete 7-day windows must be interpreted
+   as right-censored.
+*/
+
 WITH customer_cohorts AS (
     SELECT
         c.customer_id,
